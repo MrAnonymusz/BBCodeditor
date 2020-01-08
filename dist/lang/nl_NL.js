@@ -35,7 +35,7 @@
 				link: {
 					button: 'Link',
 					modal: 'Voeg link in',
-					target: 'Open een nieuw scherm',
+					text: 'Voeg link tekst in',
 					insert: 'Voeg link in',
 				},
 				image: {
