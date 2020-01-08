@@ -4,7 +4,7 @@ _**Warning!** I'm not a professional javascript developer so this project may ha
 # Installation
 1. You must include in your page the necessary file(s) of [jQuery](https://jquery.com/) and [Bootstrap](https://getbootstrap.com/) *These files must be included in the header tag*
 ```html
-<link rel="stylesheets" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -13,9 +13,9 @@ _**Warning!** I'm not a professional javascript developer so this project may ha
 2. Add the following code to your header tag *(before it closes)*
 ```html
 <head>
-	<!-- ... -->
-	<link rel="stylesheet" href="../dist/jquery.editor.css">
-	<link rel="stylesheet" href="../dist/inc/pickr/themes/monolith.min.css">
+  <!-- ... -->
+  <link rel="stylesheet" href="../dist/jquery.editor.css">
+   <link rel="stylesheet" href="../dist/inc/pickr/themes/monolith.min.css">
 </head>
 ```
 3. Add the code to your body tag *(in the bottom of it)*
@@ -39,10 +39,10 @@ And now add to the body tag after the *jquery.editor.js* file the following html
 ```html
 <script>
 $(function() {
-	$('#example-editor').bbcodeditor({
-		defaultValue: "", // This option must be included whenever the editor is called (it can be left empty) !important
-		content_class: "example-editor-content" // This "option" is optional but you must call it if you want the get the value of the content area (editor)
-	});
+  $('#example-editor').bbcodeditor({
+    defaultValue: "", // This option must be included whenever the editor is called (it can be left empty) !important
+    content_class: "example-editor-content" // This "option" is optional but you must call it if you want the get the value of the content area (editor)
+  });
 });
 </script>
 ```
@@ -52,8 +52,8 @@ $(function() {
 # Default Options
 ```javascript
 {
-	lang: 'en-EN',
- 	icons: 'font-awesome-5',
+  lang: 'en-EN',
+  icons: 'font-awesome-5',
   height: 200,
   minHeight: 100,
   maxHeight: 400,
