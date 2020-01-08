@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			BBCodeditor - Main Example
+		</title>
+		<meta charset="utf-8">
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/toolbar/prism-toolbar.css">
+		<!-- Editor -->
+		<link rel="stylesheet" href="../dist/jquery.editor.css">
+		<link rel="stylesheet" href="../dist/inc/pickr/themes/monolith.min.css">
+		<!-- Editor -->
+		<!-- Stylesheets -->
+		<!-- Javascript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+		<!-- Javascript -->
+	</head>
+	<body>
+		<!-- BODY -->
+		<div class="container">
+			<div class="row">
+				<!-- Basic Example -->
+				<div class="col-md-12 bg-dark text-white mt-3 mb-3 pt-3 pb-3 rounded shadow">
+					<h2>Basic Example</h2>
+					<p>This is the basic type of the editor <i>(it doesn't have enabled the <u>image upload</u> and the <u>preview</u>)</i>.</p>
+<pre class="line-numbers">
+	<code class="language-javascript">
+	$('#example-id').bbcodeditor({
+		defaultValue: "", // This option must be included whenever the editor is called (it can be left empty) !important
+		content_class: "example-id-content" // This "option" is optional but you must call it if you want the get the value of the content area (editor)
+	});
+	</code>
+</pre>
+					<hr class="border-white" />
+					<div id="simple-bbcode-editor"></div>
+				</div>
+				<!-- Basic Example -->
+				<!-- How to Enable The Preview Button  -->
+				<div class="col-md-12 bg-dark text-white mb-3 pt-3 pb-3 rounded shadow">
+					<h2>How to enable the preview button?!</h2>
+					<p>Add the <code><u>includedButtons</u></code> option to the editor and in the option you can specify all the button that will be rendered by the editor. <b>Example:</b></p>
+<pre class="line-numbers">
+	<code class="language-javascript">
+	$('#example-id').bbcodeditor({
+		defaultValue: "",
+		content_class: "example-id-content",
+		includedButtons: [
+    	['bold', 'italic', 'underline'], ['strikethrough', 'supperscript', 'subscript'], ['font-name', 'font-size', 'color'], ['unordered-list', 'ordered-list', 'align'], ['link', 'image', 'media'], ['misc', 'advcode', 'table'] ['preview']
+    ]
+	});
+	</code>
+</pre>
+					<p>After that you must add the following values to the editor:</p>
+					<ul>
+						<li><b class="text-info">customRequestToken</b>: <i><u>true</u></i></li>
+						<li><b class="text-info">previewRequestUrl</b>: <i>"https://example.com/request_preview.php"</i></li>
+						<li><b class="text-info">previewRequestTokenName</b>: <i>"_token" (it's useful for frameworks <u class="text-danger">make sure your (framework's) token name is the one mentioned</u>)</i></li>
+						<li><b class="text-info">previewRequestToken</b>: <i>the actual token itself (<span class="text-danger">Ex: <u>vf5Un8KUDa</u></span>)</i></li>
+					</ul>
+					<p>You'll receive something like this on the server side:</p>
+<pre class="line-numbers">
+	<code class="language-none">
+		bbcode: W2JdSGVsbG8gV29ybGQhWy9iXQ==
+		_token: vf5Un8KUDa
+	</code>
+</pre>
+					<p>It is a <b class="text-info">GET</b> request by default <i>(you can change it by adding the <code><u>previewRequestType</u></code> to the editor)</i>. The <b class="text-info">bbcode</b>'s value is encoded in <i><u>base64</u></i> and it must be decoded <i>(You can use this function to decode it in php: <code>base64_decode($value);</code>)</i>.</p>
+					<p><b>Example:</b></p>
+<pre class="line-numbers">
+	<code class="language-javascript">
+		$('#example-id').bbcodeditor({
+			defaultValue: "",
+			content_class: "example-id-content",
+			customRequestToken: true,
+			previewRequestTokenName: "_token", // This is the token's name in laravel!
+			previewRequestToken: "vf5Un8KUDa",
+			previewRequestUrl: "https://example.com/request_preview.php"
+		});
+	</code>
+</pre>
+					<p>And the server must return the following values in a <i><b class="text-info">json</b> format</i>:</p>
+<pre class="line-numbers">
+	<code class="language-json">
+		{
+			parsed: "&lt;b&gt;Hello World!&lt;/b&gt;",
+			raw: "[b]Hello World![/b]"
+		}
+	</code>
+</pre>
+					<p><b class="text-danger">Note:</b> the <i><u>parsed</u></i> and <i><u>raw</u></i> values must actually be the bbcode, <u class="text-danger">the code above is just an example!</u></p>
+					<h5><a href="https://gist.github.com/afsalrahim/bc8caf497a4b54c5d75d" target="_blank">Click here</a> if you want to see a simple bbcode parser.</h5>
+					<p><b class="text-danger">Note:</b> if you want to send an error message instead of the bbcode use the following json format:</p>
+<pre class="line-numbers">
+	<code class="language-json">
+		{
+			error: "Example error message!"
+		}
+	</code>
+</pre>
+					<p><b>Example:</b></p>
+<pre class="line-numbers">
+	<code class="language-php">
+		&lt;?php
+		class PreviewClass
+		{
+			public $value;
+			public $bbocde;
+
+			private $_output;
+
+			public function bbcodeParse($value)
+			{
+				$this->value = $value;
+
+				// Parse the code
+			}
+
+			public function __construct()
+			{
+				$this->bbcode = $_GET['bbcode'];
+
+				$this->bbcode = base64_decode($this->bbcode);
+
+				if(!empty($this->bbcode))
+				{
+					$this->_output = json_encode([
+						'parsed' => $this->bbcodeParse($this->bbcode),
+						'raw' => $this->bbcode
+					]);
+				}
+				else
+				{
+					$this->_output = json_encode([
+						'error' => 'Please don\'t leave the bbcode field empty!'
+					]);
+				}
+
+				return $this->_output;
+			}
+		}
+	</code>
+</pre>
+				</div>
+				<!-- How to Enable The Preview Button  -->
+				<!-- How to Enable Image Uplaod(s) -->
+				<div class="col-md-12 bg-dark text-white mb-3 pt-3 pb-3 rounded shadow">
+					<h2>How to enable image upload(s)!?</h2>
+					<p>You must add the following options to your editor:</p>
+					<ul>
+						<li><b class="text-info">enableImageUpload</b> <i><u>true</u></i></li>
+						<li><b class="text-info">uploadFileName</b>: <i><u>"filename"</u></i></li>
+						<li><b class="text-info">uploadFile</b>: <i><u>"bbcodeditor-image-upload"</u></i></li>
+						<li><b class="text-info">uploadFileTokenName</b>: <i>"_token" (it's useful for frameworks <u class="text-danger">make sure your (framework's) token name is the one mentioned</u>)</i></li>
+						<li><b class="text-info">uploadFileToken</b>: <i>the actual token itself (<span class="text-danger">Ex: <u>vf5Un8KUDa</u></span>)</i></li>
+					</ul>
+					<p>The default submitting method is <b class="text-info">POST</b> <i>(It can be changed through adding the <code><u>imageUploadType</u></code> option to the editor, <span class="text-danger">it is not recommanded to change the upload method to GET!</span>)</i>.</p>
+					<p>You can get/call the file via <code>$_POST['bbcodeditor-image-upload']</code> in your php script.
+					<p><b>Example:</b></p>
+<pre class="line-numbers">
+	<code class="language-javascript">
+	$('#example-id').bbcodeditor({
+		defaultValue: "",
+		content_class: "example-id-content",
+		enableImageUpload: true,
+		uploadFileName: "filename",
+		uploadFile: "bbcodeditor-image-upload",
+		uploadFileTokenName: "_token",
+		uploadFileToken: "vf5Un8KUDa"
+	});
+	</code>
+</pre>
+					<p>You get/call the file easier following this example:</p>
+<pre class="line-numbers">
+	<code class="language-php">
+	$filename = $_POST['filename'];
+
+	$this->file = $_FILE[$filename];
+	</code>
+</pre>
+				</div>
+				<!-- How to Enable Image Uplaod(s) -->
+			</div>
+		</div>
+		<!-- BODY -->
+		<!-- Extra CSS -->
+		<style type="text/css">
+			body {
+				background: linear-gradient(120deg, #3498DB, #9B59B6, #2ECC71) no-repeat fixed;
+			}
+
+			.text-danger {
+				color: #E74C3C;
+			}
+
+			.bd-danger {
+				background-color: #E74C3C;
+			}
+		</style>
+		<!-- Extra CSS -->
+		<!-- JS -->
+		<!-- Editor -->
+		<script src="../dist/inc/pickr/pickr.es5.min.js"></script>
+		<script src="../dist/inc/inputmask/jquery.inputmask.js"></script>
+		<script src="../dist/lang/en_EN.js"></script>
+		<script src="../dist/icons/font-awesome-5.js"></script>
+		<script src="../dist/jquery.editor.js"></script>
+		<!-- Editor -->
+		<script type="text/javascript">
+			$(function() {
+				$('#simple-bbcode-editor').bbcodeditor({
+			    defaultValue: "", // This option must be included whenever the editor is called (it can be left empty) !important
+			    content_class: "simple-bbcode-editor-content" // This "option" is optional but you must call it if you want the get the value of the content area (editor)
+			  });
+			});
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/prism.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/toolbar/prism-toolbar.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/show-language/prism-show-language.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-markup.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-clike.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-javascript.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-css.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-json.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-markup-templating.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-php.min.js"></script>
+		<!-- JS -->
+	</body>
+</html>
