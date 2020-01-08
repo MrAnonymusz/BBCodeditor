@@ -33,7 +33,7 @@ _**Warning!** I'm not a professional javascript developer so this project may ha
 Create a div in your body tag add an id to it and call the bbcodeditor function.
 ##### Example:
 ```html
-<div class="example-editor"></div>
+<div id="example-editor"></div>
 ```
 And now add to the body tag after the *jquery.editor.js* file the following html *(javascript)* code:
 ```html
