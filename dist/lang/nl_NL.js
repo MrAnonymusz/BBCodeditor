@@ -85,10 +85,7 @@
 			  invalid_value: "Ongeldige waarde voor de optie '{option}'!",
 			  lang: 'Kies een taal voor de bewerker a.u.b!',
 			  icons: 'Kies een iconen set voor de bewerker a.u.b!',
-			  height: 'Kies een hoogte voor de bewerker a.u.b!',
-			  width: 'Kies een breedte voor de bewerker a.u.b!',
-			  max_characters: "De waarde voor de optie 'maxCharacters' moet groter dan 0 zijn!",
-			  theme: 'Kies een thema voor de bewerker a.u.b!'
+			  height: 'Kies een hoogte voor de bewerker a.u.b!'
 			}
 		}
 	});
