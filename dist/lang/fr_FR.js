@@ -40,7 +40,11 @@
 				image: {
 					button: 'Image',
 					site: 'Si vous recherchez un site Web sur lequel vous pouvez upload des images, insérez-les <a href="https://imgur.com/" class="alert-link" target="_blank">ici</a>.',
-					modal: 'Insérer une image'
+					modal: 'Insérer une image',
+					url: 'Url',
+					insert_url: 'Insérer une Url',
+					upload: 'Téléverser',
+					choose_file: 'Choisir le fichier'
 				}
 				media: {
 					button: 'Média',
