@@ -96,6 +96,10 @@ $(function() {
   previewRequestToken: ""
 }
 ```
+### Language Files By
+* French by [fightmaxime](http://maximemichaud.me)
+* Hungarian and English by [MrAnonymusz](https://projects.annotech.net)
+* Dutch by Paul _(__Discord Tag:__ Paul.#0933)_
 
 ### The Following Plugins Were Used
 
