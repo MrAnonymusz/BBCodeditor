@@ -100,6 +100,7 @@ $(function() {
 * French by [fightmaxime](http://maximemichaud.me)
 * Hungarian and English by [MrAnonymusz](https://projects.annotech.net)
 * Dutch by Paul _(__Discord Tag:__ Paul.#0933)_
+* Spanish by [Aco](http://acostainc.tech) _(__Discord Tag:__ Aco#7598)_
 
 ### The Following Plugins Were Used
 
