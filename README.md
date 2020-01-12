@@ -99,8 +99,10 @@ $(function() {
 ### Language Files By
 * French by [fightmaxime](http://maximemichaud.me)
 * Hungarian and English by [MrAnonymusz](https://projects.annotech.net)
-* Dutch by Paul _(__Discord Tag:__ Paul.#0933)_
+* Dutch by Paul. _(__Discord Tag:__ Paul.#0933)_
 * Spanish by [Aco](http://acostainc.tech) _(__Discord Tag:__ Aco#7598)_
+* Italian by [Nexgan](https://discord.gg/4SxSuNM) _(__Discord Tag:__ Nexgan#4788)_
+* Chinese by Xu_wznln _(__Discord Tag:__ Xu_wznln#7001)_
 
 ### The Following Plugins Were Used
 
