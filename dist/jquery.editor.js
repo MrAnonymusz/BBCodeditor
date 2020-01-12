@@ -847,7 +847,7 @@
 
     for(var x = 0; x < includedButtons.length; x++)
     {
-      var button_group_id = 'bbcodeditor-head-btn-toolbar-' + x;
+      var button_group_id = 'bbcodeditor-head-btn-toolbar-' + x + '-' + editor_id;
 
       var btn_group_template = '<div class="btn-group" id="' + button_group_id + '"></div>';
 
