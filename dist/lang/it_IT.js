@@ -1,7 +1,7 @@
 /*
   >> Credits
-    >> Author: </Aco>
-    >> Contact Link: </Aco>#0001 (Discord Tag)
+    >> Author: Nexgan
+    >> Contact Link: Nexgan#4788 (Discord Tag)
 */
 (function ($) {
 	$.extend($.editor_lang, {
