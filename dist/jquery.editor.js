@@ -499,7 +499,7 @@
       var button_class = options.button_class;
     }
 
-    if(typeof options.height == "undefined" || typeof options.height != "integer")
+    if(typeof options.height == "undefined")
     {
       var height = defaults.height;
     }
@@ -508,7 +508,7 @@
       var height = options.height;
     }
 
-    if(typeof options.minHeight == "undefined" || typeof options.minHeight != "integer")
+    if(typeof options.minHeight == "undefined")
     {
       var minHeight = defaults.minHeight;
     }
@@ -517,7 +517,7 @@
       var minHeight = options.minHeight;
     }
 
-    if(typeof options.maxHeight == "undefined" || typeof options.maxHeight != "integer")
+    if(typeof options.maxHeight == "undefined")
     {
       var maxHeight = defaults.maxHeight;
     }
