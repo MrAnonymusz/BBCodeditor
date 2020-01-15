@@ -1,4 +1,4 @@
-# BBCodeditor - 1.0
+# BBCodeditor - 1.2
 _**Warning!** I'm not a professional javascript developer so this project may have some bugs and probably it will take time to fix them on my own._
 
 # Installation
@@ -96,6 +96,10 @@ $(function() {
   previewRequestToken: ""
 }
 ```
+
+### Contributions
+**Updates to the `insertText` function by Paul. _(Discord Tag: Paul.#0933)_**
+
 ### Language Files By
 * French by [fightmaxime](http://maximemichaud.me)
 * Hungarian and English by [MrAnonymusz](https://projects.annotech.net)
