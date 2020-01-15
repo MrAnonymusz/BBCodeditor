@@ -395,25 +395,86 @@
   }
 
   // Insert Function
-  function insertText(selector, text, clear, options, defaults)
+  function insertText(selector, text, clear, options, defaults, wrap = false)
   {
     var selector = selector;
     var text = text;
     var clear = clear;
-
     var options = options;
     var defaults = defaults;
+    var mouse = getMouse(selector);
 
     if(clear == false)
     {
+      var element = $('#' + selector);
+      var start = mouse.start;
+      var end = mouse.end;
       var content = $('#' + selector).val();
+      var content1 = content.substring(0,start);
+      var content2 = content.substring(start,end);
+      var content3 = content.substring(end,content.length);
+      var textSplit = text.split("][");
 
-      $('#' + selector).val(content + text);
+      textSplit[0] += "]";
+      textSplit[1] = "[" + textSplit[1];
+
+      var total;
+
+      if (wrap)
+      {
+        total = content1;
+        
+        if (start == end)
+        {
+          total += text;
+        }
+        else
+        {
+          total += textSplit[0] + content2 + textSplit[1];
+        }
+
+        total += content3;
+      }     
+      else
+      {
+        total = content1 + text;
+        
+        if (start != end)
+        {
+          total += content2;
+        }
+        else
+        {
+          total += content3;
+        }
+      }
+
+      element.val(total);
+
+      if (start == end)
+      {
+        element.selectRange(start + text.length, start + text.length);
+      }
+      else
+      {
+        element.selectRange(start, (end + text.length));
+      }
     }
     else if(clear == true)
     {
-      $('#' + selector).val(text);
+      element.val(text);
+      element.focus();
     }
+  }
+
+  // Get the mouse positon / selection
+  function getMouse(selector)
+  {
+    var selector = selector;
+    var input = document.getElementById(selector);
+    var startPosition = input.selectionStart;
+    var endPosition = input.selectionEnd;
+    return {start: startPosition, end: endPosition};
   }
 
   // Main Function
@@ -1080,7 +1141,7 @@
     $('#bbcodeditor-btn-insert-color-' + editor_id).click(function() {
       var selectedColor = $('#bbcodeditor-modal-color-picker-output-' + editor_id).val();
 
-      insertText(body_content_class, '[color=' + selectedColor + '][/color]', false, options, defaults);
+      insertText(body_content_class, '[color=' + selectedColor + '][/color]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-color-' + editor_id).modal('hide');
     });
@@ -1091,17 +1152,17 @@
 
       if(link_text += "" && link_val != "")
       {
-        insertText(body_content_class, '[url=' + link_val + ']' + link_text + '[/url]', false, options, defaults);
+        insertText(body_content_class, '[url=' + link_val + ']' + link_text + '[/url]', false, options, defaults, true);
       }
       else
       {
         if(link_text == "" && link_val != "")
         {
-          insertText(body_content_class, '[url]' + link_val + '[/url]', false, options, defaults);
+          insertText(body_content_class, '[url]' + link_val + '[/url]', false, options, defaults, true);
         }
         else
         {
-          insertText(body_content_class, '[url][/url]', false, options, defaults);
+          insertText(body_content_class, '[url][/url]', false, options, defaults, true);
         }
       }
 
@@ -1120,7 +1181,7 @@
 
         if(image_type == "url")
         {
-          insertText(body_content_class, '[img]' + image_val + '[/img]', false, options, defaults);
+          insertText(body_content_class, '[img]' + image_val + '[/img]', false, options, defaults, true);
 
           $('#bbcodeditor-modal-image-' + editor_id).modal('hide');
         }
@@ -1148,7 +1209,7 @@
                 {
                   $('#bbcodeditor-modal-image-upload-output-' + editor_id).html('<div class="alert alert-success mt-2">' + data.message + '</div>');
 
-                  insertText(body_content_class, '[img]' + data.preview + '[/img]', false, options, defaults);
+                  insertText(body_content_class, '[img]' + data.preview + '[/img]', false, options, defaults, true);
 
                   setTimeout(function() {
                     $('#bbcodeditor-modal-image-upload-output-' + editor_id).empty();
@@ -1158,7 +1219,7 @@
                 }
                 else
                 {
-                  insertText(body_content_class, '[img]' + data.preview + '[/img]', false, options, defaults);
+                  insertText(body_content_class, '[img]' + data.preview + '[/img]', false, options, defaults, true);
 
                   $('#bbcodeditor-modal-image-' + editor_id).modal('hide');
                 }
@@ -1176,7 +1237,7 @@
       }
       else
       {
-        insertText(body_content_class, '[img]' + image_val + '[/img]', false, options, defaults);
+        insertText(body_content_class, '[img]' + image_val + '[/img]', false, options, defaults, true);
 
         $('#bbcodeditor-modal-image-' + editor_id).modal('hide');
       }
@@ -1185,7 +1246,7 @@
     $('#bbcodeditor-btn-insert-media-' + editor_id).click(function() {
       var media_url = $('#bbcodeditor-modal-media-input-' + editor_id).val();
 
-      insertText(body_content_class, '[media]' + media_url + '[/media]', false, options, defaults);
+      insertText(body_content_class, '[media]' + media_url + '[/media]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-media-' + editor_id).modal('hide');
 
@@ -1194,55 +1255,55 @@
 
     // Misc Items
     $('#bbcodeditor-modal-misc-item-h1-' + editor_id).click(function() {
-      insertText(body_content_class, '[h1][/h1]', false, options, defaults);
+      insertText(body_content_class, '[h1][/h1]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-h2-' + editor_id).click(function() {
-      insertText(body_content_class, '[h2][/h2]', false, options, defaults);
+      insertText(body_content_class, '[h2][/h2]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-h3-' + editor_id).click(function() {
-      insertText(body_content_class, '[h3][/h3]', false, options, defaults);
+      insertText(body_content_class, '[h3][/h3]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-h4-' + editor_id).click(function() {
-      insertText(body_content_class, '[h4][/h4]', false, options, defaults);
+      insertText(body_content_class, '[h4][/h4]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-h5-' + editor_id).click(function() {
-      insertText(body_content_class, '[h5][/h5]', false, options, defaults);
+      insertText(body_content_class, '[h5][/h5]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-h6-' + editor_id).click(function() {
-      insertText(body_content_class, '[h6][/h6]', false, options, defaults);
+      insertText(body_content_class, '[h6][/h6]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-blockquote-' + editor_id).click(function() {
-      insertText(body_content_class, '[blockquote][/blockquote]', false, options, defaults);
+      insertText(body_content_class, '[blockquote][/blockquote]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-code-' + editor_id).click(function() {
-      insertText(body_content_class, '[code][/code]', false, options, defaults);
+      insertText(body_content_class, '[code][/code]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
 
     $('#bbcodeditor-modal-misc-item-linebreak-' + editor_id).click(function() {
-      insertText(body_content_class, '[linebreak]', false, options, defaults);
+      insertText(body_content_class, '[linebreak]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-misc-' + editor_id).modal('hide');
     });
@@ -1251,7 +1312,7 @@
       var advcode_lang = $('#bbcodeditor-modal-advcode-lang-select-' + editor_id).val();
       var advcode_input = $('#bbcodeditor-modal-advcode-input-' + editor_id).val();
 
-      insertText(body_content_class, '\n[advcode=' + advcode_lang + ']\n' + advcode_input + '\n[/advcode]', false, options, defaults);
+      insertText(body_content_class, '\n[advcode=' + advcode_lang + ']\n' + advcode_input + '\n[/advcode]', false, options, defaults, true);
 
       $('#bbcodeditor-modal-advcode-' + editor_id).modal('hide');
       $('#bbcodeditor-modal-advcode-input-' + editor_id).val('');
@@ -1277,7 +1338,7 @@
 
       insertValue += '\n  [/tbody]\n[/table]';
 
-      insertText(body_content_class, insertValue, false, options, defaults);
+      insertText(body_content_class, insertValue, false, options, defaults, true);
 
       $('#bbcodeditor-modal-table-' + editor_id).modal('hide');
 
@@ -1290,107 +1351,123 @@
     */
 
     $('#bbcodeditor-head-btn-bold-' + editor_id).click(function() {
-      insertText(body_content_class, '[b][/b]', false, options, defaults);
+      insertText(body_content_class, '[b][/b]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-head-btn-italic-' + editor_id).click(function() {
-      insertText(body_content_class, '[i][/i]', false, options, defaults);
+      insertText(body_content_class, '[i][/i]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-head-btn-underline-' + editor_id).click(function() {
-      insertText(body_content_class, '[u][/u]', false, options, defaults);
+      insertText(body_content_class, '[u][/u]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-head-btn-strikethrough-' + editor_id).click(function() {
-      insertText(body_content_class, '[s][/s]', false, options, defaults);
+      insertText(body_content_class, '[s][/s]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-head-btn-supperscript-' + editor_id).click(function() {
-      insertText(body_content_class, '[sup][/sup]', false, options, defaults);
+      insertText(body_content_class, '[sup][/sup]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-head-btn-subscript-' + editor_id).click(function() {
-      insertText(body_content_class, '[sub][/sub]', false, options, defaults);
+      insertText(body_content_class, '[sub][/sub]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-arial-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Arial][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Arial][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-arial-black-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Arial Black][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Arial Black][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-comic-sans-ms-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Comic Sans MS][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Comic Sans MS][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-helvetica-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Helvetica][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Helvetica][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-impact-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Impact][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Impact][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-Tahoma-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Tahoma][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Tahoma][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-times-new-roman-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Times New Roman][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Times New Roman][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-name-verdana-' + editor_id).click(function() {
-      insertText(body_content_class, '[font=Verdana][/font]', false, options, defaults);
+      insertText(body_content_class, '[font=Verdana][/font]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-size-8-' + editor_id).click(function() {
-      insertText(body_content_class, '[size=8][/size]', false, options, defaults);
+      insertText(body_content_class, '[size=8][/size]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-size-10-' + editor_id).click(function() {
-      insertText(body_content_class, '[size=10][/size]', false, options, defaults);
+      insertText(body_content_class, '[size=10][/size]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-size-12-' + editor_id).click(function() {
-      insertText(body_content_class, '[size=12][/size]', false, options, defaults);
+      insertText(body_content_class, '[size=12][/size]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-size-14-' + editor_id).click(function() {
-      insertText(body_content_class, '[size=14][/size]', false, options, defaults);
+      insertText(body_content_class, '[size=14][/size]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-size-16-' + editor_id).click(function() {
-      insertText(body_content_class, '[size=16][/size]', false, options, defaults);
+      insertText(body_content_class, '[size=16][/size]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-size-18-' + editor_id).click(function() {
-      insertText(body_content_class, '[size=18][/size]', false, options, defaults);
+      insertText(body_content_class, '[size=18][/size]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-font-size-22-' + editor_id).click(function() {
-      insertText(body_content_class, '[size=22][/size]', false, options, defaults);
+      insertText(body_content_class, '[size=22][/size]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-head-btn-unordered-list-' + editor_id).click(function() {
-      insertText(body_content_class, '\n[list]\n[li][/li]\n[/list]', false, options, defaults);
+      insertText(body_content_class, '\n[list]\n[li][/li]\n[/list]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-head-btn-ordered-list-' + editor_id).click(function() {
-      insertText(body_content_class, '\n[list=1]\n[li][/li]\n[/list]', false, options, defaults);
+      insertText(body_content_class, '\n[list=1]\n[li][/li]\n[/list]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-align-left-' + editor_id).click(function() {
-      insertText(body_content_class, '[align=left][/align]', false, options, defaults);
+      insertText(body_content_class, '[align=left][/align]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-align-center-' + editor_id).click(function() {
-      insertText(body_content_class, '[align=center][/align]', false, options, defaults);
+      insertText(body_content_class, '[align=center][/align]', false, options, defaults, true);
     });
 
     $('#bbcodeditor-drp-align-right-' + editor_id).click(function() {
-      insertText(body_content_class, '[align=right][/align]', false, options, defaults);
+      insertText(body_content_class, '[align=right][/align]', false, options, defaults, true);
     });
   };
 }(jQuery));
+
+// Credit to Sam Deering (https://www.sitepoint.com/jqueryhtml5-input-focus-cursor-positions/)
+$.fn.selectRange = function(start, end) {
+  return this.each(function() {
+      if (this.setSelectionRange) {
+          this.focus();
+          this.setSelectionRange(start, end);
+      } else if (this.createTextRange) {
+          var range = this.createTextRange();
+          range.collapse(true);
+          range.moveEnd('character', end);
+          range.moveStart('character', start);
+          range.select();
+      }
+  });
+};
