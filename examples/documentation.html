@@ -186,6 +186,26 @@
 </pre>
 				</div>
 				<!-- How to Enable Image Uplaod(s) -->
+				<!-- How to get the value of the editor -->
+				<div class="col-md-12 bg-dark text-white mt-3 mb-3 pt-3 pb-3 rounded shadow">
+					<h2>How to get the value of the editor!?</h2>
+					<p>If you have specified the <code>content_class</code> you can get the value of the editor the following way:</p>
+<pre class="line-numbers">
+	<code class="language-javascript">
+		// Call the editor
+		$('#example-id').bbcodeditor({
+			// ...
+			content_class: "example-id-content",
+			// ...
+		});
+
+		// This will insert the value of the editor in the console
+		console.log($('#example-id-content').val());
+	</code>
+</pre>
+					<p>The <code>content_class</code> will be outputed as an ID so you must use the <b>#</b> operator to access it. You can get the value of it with the following code <code class="language-javascript">$('#example-id-content').val()</code>. <i class="text-danger"><u>This is just an example!</u></i></p>
+				</div>
+				<!-- How to get the value of the editor -->
 			</div>
 		</div>
 		<!-- BODY -->
