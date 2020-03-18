@@ -1,7 +1,7 @@
 /*
   >> Credits
-    >> Author: fightmaxime
-    >> Contact Link: http://maximemichaud.me
+    >> Author: MaximeMichaud
+    >> Contact Link: https://maximemichaud.me/contact
 */
 (function($) {
 	$.extend($.editor.lang, {
