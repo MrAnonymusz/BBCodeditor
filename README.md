@@ -101,7 +101,7 @@ $(function() {
 **Updates to the `insertText` function by Paul. _(Discord Tag: Paul.#0933)_**
 
 ### Language Files By
-* French by [fightmaxime](http://maximemichaud.me)
+* French by [MaximeMichaud](https://github.com/maximemichaud)
 * Hungarian and English by [MrAnonymusz](https://projects.annotech.net)
 * Dutch by Paul. _(__Discord Tag:__ Paul.#0933)_
 * Spanish by [Aco](http://acostainc.tech) _(__Discord Tag:__ Aco#7598)_
